@@ -548,9 +548,7 @@ l-28 32 -2 -84z" />
                         <h1 class="header">The <span id="typed" class="purple">Hack</span> will start in </h1>
                     </center>
                     <div class="clock-body">
-                        <div id="hrs">408</div>:
-                        <div id="mins">23</div>:
-                        <div id="secs">23</div>
+                        <div id="timer">00:00:00</div>
                     </div>
                 </div>
             </section>
@@ -717,6 +715,38 @@ l-28 32 -2 -84z" />
             rightDiv.innerText = desc
             rightElem.appendChild(rightDiv)
         })
+      //clock ka code   
+    let timer;
+    const targetDate = new Date('December 16, 2023 10:00:00 GMT');
+    let targetTimeInSeconds = Math.floor((targetDate.getTime() - Date.now()) / 1000);
+
+    function startTimer() {
+        timer = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        if (targetTimeInSeconds <= 0) {
+            clearInterval(timer);
+            document.getElementById('timer').innerText = '00:00:00';
+            return;
+        }
+
+        const hours = Math.floor(targetTimeInSeconds / 3600);
+        const minutes = Math.floor((targetTimeInSeconds % 3600) / 60);
+        const remainingSeconds = targetTimeInSeconds % 60;
+
+        const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(remainingSeconds)}`;
+        document.getElementById('timer').innerText = formattedTime;
+
+        targetTimeInSeconds--;
+    }
+
+    function pad(value) {
+        return value < 10 ? '0' + value : value;
+    }
+
+    startTimer(); // Start  automatically when the page loads
+
 
 
 
